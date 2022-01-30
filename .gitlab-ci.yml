@@ -1,0 +1,28 @@
+default:
+  image: ubuntu:latest
+  tags:
+    - docker
+
+.commons: &commons
+  only:
+    - merge_requests
+
+begin-test:
+  <<: *commons
+  stage: build
+  script:
+    - echo "Checking MR for $GITLAB_USER_LOGIN..."
+
+check-linting:
+  <<: *commons
+  stage: test
+  script:
+    - echo "Running linter..."
+    - echo "done"
+
+run-tests:
+  <<: *commons
+  stage: test
+  script:
+    - echo "Running tests..."
+    - echp "done"
