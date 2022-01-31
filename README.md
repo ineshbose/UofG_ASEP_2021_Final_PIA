@@ -10,7 +10,7 @@ The outcomes for this activity are:
 
 ## Task
 
-As before, you may or may not have direct access as a team member to **this** repository, but you should be able to create issues and fork the repository. This activity involves a browser extension (in React - not too important) that would interact with a Django backend using APIs. This browser extension is a calculator, that would send requests to the server based on the operations. A sample operation (root) has already been implemented.
+As before, you may or may not have direct access as a team member to **this** repository, but you should be able to create issues and fork the repository. This activity involves a browser extension (in React - not too important) that would interact with a Django backend using APIs. This browser extension is a calculator, that would send requests to the server based on the operations. A sample operation (exponentiation) has already been implemented.
 
 Create an issue to start with, for yourself, with the title "Add operation [operation name]", also **choosing the right issue template** which should be filled in appropriately. The workflow would be similar as last time - you would tackle this issue and create a merge request.
 

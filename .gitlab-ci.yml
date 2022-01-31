@@ -7,22 +7,50 @@ default:
   only:
     - merge_requests
 
+before_script:
+  - hmm
+
 begin-test:
   <<: *commons
   stage: build
   script:
     - echo "Checking MR for $GITLAB_USER_LOGIN..."
 
-check-linting:
+check-backend:
   <<: *commons
   stage: test
+  image: python:latest
+  variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  cache:
+    paths:
+      - .cache/pip
+      - venv/
+  before_script:
+    - python -V
+    - pip install virtualenv
+    - virtualenv venv
+    - source venv/bin/activate
+    - pip install -r requirements-dev.txt
   script:
-    - echo "Running linter..."
-    - echo "done"
+    - echo "Checking backend..."
+    - echo "Checking linting..."
+    - python -m black --check .
+    - echo "Checking tests..."
+    - python manage.py test
 
-run-tests:
+check-frontend:
   <<: *commons
   stage: test
+  image: node:latest
+  cache:
+    paths:
+      - node_modules/
+  before_script:
+    - npm install
   script:
-    - echo "Running tests..."
-    - echp "done"
+    - echo "Checking frontend..."
+    - echo "Checking linting..."
+    - eslint --ext .jsx --ext .js .
+    - echo "Checking tests..."
+

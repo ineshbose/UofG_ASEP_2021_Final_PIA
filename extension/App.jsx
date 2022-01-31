@@ -3,15 +3,21 @@ import logo from './logo.svg';
 import './App.css';
 import {Button, Container, Row} from 'react-bootstrap';
 
+const API_PATH = 'http://127.0.0.1:8000';
+
+const OPERATION_PATHS = {
+  EXPONENTIAL: 'exponent',
+};
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {num1: 0, num2: 0, currentNum: 1, operation: ''};
+    this.state = {num1: 0, num2: 0, currentNum: 1, operation: '', result: null};
   }
 
   displayNum = () => {
-    const {num1, num2, currentNum} = this.state;
-    return currentNum === 1 ? num1 : num2;
+    const {num1, num2, currentNum, result} = this.state;
+    return result ? result : currentNum === 1 ? num1 : num2;
   };
 
   updateNum = (digit) => {
@@ -34,10 +40,24 @@ export default class App extends React.Component {
   };
 
   reset = () => {
-    this.setState({num1: 0, num2: 0, currentNum: 1, operation: ''});
+    this.setState({
+      num1: 0,
+      num2: 0,
+      currentNum: 1,
+      operation: '',
+      result: null,
+    });
   };
 
-  compute = () => {};
+  compute = () => {
+    const {num1, num2, operation} = this.state;
+    fetch(`${API_PATH}/${OPERATION_PATHS[operation]}/`, {
+      method: 'POST',
+      body: JSON.stringify({num1, num2}),
+    })
+        .then((response) => response.json())
+        .then((response) => this.setState({result: response.result}));
+  };
 
   render() {
     return (
@@ -78,9 +98,9 @@ export default class App extends React.Component {
             variant="light"
             style={{...styles.button, ...styles.grayButton}}
             className="col-3"
-            onClick={() => {}}
+            onClick={() => this.selectOperation('EXPONENTIAL')}
           >
-            ±
+            ^
           </Button>
           <Button
             variant="light"
@@ -94,7 +114,7 @@ export default class App extends React.Component {
             variant="light"
             style={{...styles.button, ...styles.orangeButton}}
             className="col-3"
-            onClick={() => this.selectOperation('divide')}
+            onClick={() => {}}
           >
             ÷
           </Button>
@@ -128,7 +148,7 @@ export default class App extends React.Component {
             variant="light"
             style={{...styles.button, ...styles.orangeButton}}
             className="col-3"
-            onClick={() => this.selectOperation('multiply')}
+            onClick={() => {}}
           >
             ×
           </Button>
@@ -162,7 +182,7 @@ export default class App extends React.Component {
             variant="light"
             style={{...styles.button, ...styles.orangeButton}}
             className="col-3"
-            onClick={() => this.selectOperation('subtract')}
+            onClick={() => {}}
           >
             −
           </Button>
@@ -196,7 +216,7 @@ export default class App extends React.Component {
             variant="light"
             style={{...styles.button, ...styles.orangeButton}}
             className="col-3"
-            onClick={() => this.selectOperation('add')}
+            onClick={() => {}}
           >
             +
           </Button>
