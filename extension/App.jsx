@@ -81,6 +81,7 @@ export default class App extends React.Component {
           />
         </div>
         <Row
+          data-testid="result-display"
           style={{fontSize: '5em', fontWeight: 200, justifyContent: 'end'}}
         >
           {this.displayNum()}

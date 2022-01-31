@@ -51,6 +51,6 @@ check-frontend:
   script:
     - echo "Checking frontend..."
     - echo "Checking linting..."
-    - eslint --ext .jsx --ext .js .
+    - npm run lint
     - echo "Checking tests..."
-
+    - npm test
