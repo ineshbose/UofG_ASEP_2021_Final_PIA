@@ -7,6 +7,7 @@ const API_PATH = 'http://127.0.0.1:8000';
 
 const OPERATION_PATHS = {
   EXPONENTIAL: 'exponent',
+  SUBTRACT: 'subtract',
 };
 
 export default class App extends React.Component {
@@ -183,7 +184,7 @@ export default class App extends React.Component {
             variant="light"
             style={{...styles.button, ...styles.orangeButton}}
             className="col-3"
-            onClick={() => {}}
+			onClick={() => this.selectOperation('SUBTRACT')}
           >
             −
           </Button>
