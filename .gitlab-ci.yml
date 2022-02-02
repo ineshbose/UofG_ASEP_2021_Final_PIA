@@ -7,9 +7,6 @@ default:
   only:
     - merge_requests
 
-before_script:
-  - hmm
-
 begin-test:
   <<: *commons
   stage: build
