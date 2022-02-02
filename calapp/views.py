@@ -15,3 +15,10 @@ def exponent(request):
     """
     data = json.loads(request.body.decode("utf-8"))
     return JsonResponse({"result": data["num1"] ** data["num2"]})
+
+def multiply(request):
+    """
+    Takes two numbers and performs multiply operation.
+    """
+    data = json.loads(request.body.decode("utf-8"))
+    return JsonResponse({"result": data["num1"] * data["num2"]})

@@ -3,6 +3,7 @@ import 'regenerator-runtime/runtime';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import App from './App';
 
+
 global.fetch = jest.fn((input, init) => {
   const jsonToReturn = {};
   const url = input.replace(/\/$/, '');
@@ -15,6 +16,9 @@ global.fetch = jest.fn((input, init) => {
       case 'exponent':
         jsonToReturn.result = num1 ** num2;
         break;
+      case 'multiply':
+        jsonToReturn.result = num1 * num2;
+        break;
     }
   }
 
@@ -24,6 +28,7 @@ global.fetch = jest.fn((input, init) => {
 afterEach(cleanup);
 
 test('Test calculator', async () => {
+  
   const component = render(<App />);
   const buttons = component.getAllByRole('button');
   const equalsButton = buttons.find((button) => button.textContent === '=');
@@ -32,7 +37,7 @@ test('Test calculator', async () => {
     buttons.find((button) => button.textContent === `${num}`),
   );
   const resultDisplay = component.getByTestId('result-display');
-
+ 
   /** Exponent Tests */
   const exponentButton = buttons.find((button) => button.textContent === '^');
 
@@ -56,4 +61,31 @@ test('Test calculator', async () => {
   await new Promise((r) => setTimeout(r, 1500));
   expect(resultDisplay.textContent).not.toBe('100');
   fireEvent.click(resetButton);
-});
+
+  
+  /** Exponent Tests */
+  const multiplyButton = buttons.find((button) => button.textContent === '×');
+
+  // Test 1: 5 * 6 = 30
+  fireEvent.click(numButtons[5]);
+  fireEvent.click(multiplyButton);
+  fireEvent.click(numButtons[6]);
+  fireEvent.click(equalsButton);
+
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(resultDisplay.textContent).toBe('30');
+  fireEvent.click(resetButton);
+
+  // Test 2: 12 * 7 != 225
+  fireEvent.click(numButtons[1]);
+  fireEvent.click(numButtons[2]);
+  fireEvent.click(multiplyButton);
+  fireEvent.click(numButtons[7]);
+  fireEvent.click(equalsButton);
+
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(resultDisplay.textContent).not.toBe('225');
+  fireEvent.click(resetButton);
+
+  }
+);
