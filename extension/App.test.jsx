@@ -12,8 +12,13 @@ global.fetch = jest.fn((input, init) => {
     const {num1, num2} = JSON.parse(init.body);
 
     switch (path) {
+      
       case 'exponent':
         jsonToReturn.result = num1 ** num2;
+        break;
+
+      case 'divide':
+        jsonToReturn.result = num1 / num2;
         break;
     }
   }
@@ -51,6 +56,32 @@ test('Test calculator', async () => {
   fireEvent.click(exponentButton);
   fireEvent.click(numButtons[1]);
   fireEvent.click(numButtons[4]);
+  fireEvent.click(equalsButton);
+
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(resultDisplay.textContent).not.toBe('100');
+  fireEvent.click(resetButton);
+
+
+
+  /** Division Tests */
+  const divideButton = buttons.find((button) => button.textContent === '÷');
+
+  // Test 1: 8 ÷ 4 = 2
+  fireEvent.click(resetButton);
+  fireEvent.click(numButtons[8]);
+  fireEvent.click(divideButton);
+  fireEvent.click(numButtons[4]);
+  fireEvent.click(equalsButton);
+
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(resultDisplay.textContent).toBe('2');
+  fireEvent.click(resetButton);
+
+  // Test 2: 5 ÷ 2 != 100
+  fireEvent.click(numButtons[5]);
+  fireEvent.click(divideButton);
+  fireEvent.click(numButtons[2]);
   fireEvent.click(equalsButton);
 
   await new Promise((r) => setTimeout(r, 1500));
