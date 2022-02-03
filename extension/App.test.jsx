@@ -3,6 +3,10 @@ import 'regenerator-runtime/runtime';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import App from './App';
 
+<<<<<<< HEAD
+=======
+jest.setTimeout(10000);
+>>>>>>> 521d82e95fea8ceb7909e29f74ba0b703a6343dc
 
 global.fetch = jest.fn((input, init) => {
   const jsonToReturn = {};
@@ -18,6 +22,9 @@ global.fetch = jest.fn((input, init) => {
         break;
       case 'multiply':
         jsonToReturn.result = num1 * num2;
+
+      case 'addition':
+        jsonToReturn.result = num1 + num2;
         break;
     }
   }
@@ -89,3 +96,27 @@ test('Test calculator', async () => {
 
   }
 );
+  /** Addition Tests */
+  const additionButton = buttons.find((button) => button.textContent === '+');
+
+  // // Test 1: 1 + 1 = 2
+  fireEvent.click(numButtons[1]);
+  fireEvent.click(additionButton);
+  fireEvent.click(numButtons[1]);
+  fireEvent.click(equalsButton);
+
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(resultDisplay.textContent).toBe('2');
+  fireEvent.click(resetButton);
+
+  // Test 2: 14 + 9 != 100
+  fireEvent.click(numButtons[1]);
+  fireEvent.click(numButtons[4]);
+  fireEvent.click(additionButton);
+  fireEvent.click(numButtons[9]);
+  fireEvent.click(equalsButton);
+
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(resultDisplay.textContent).not.toBe('100');
+  fireEvent.click(resetButton);
+});
