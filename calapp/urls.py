@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("exponent/", views.exponent, name="exponent"),
+    path("addition/", views.addition, name="addition"),
 ]
