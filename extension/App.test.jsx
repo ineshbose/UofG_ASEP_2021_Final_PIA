@@ -3,11 +3,6 @@ import 'regenerator-runtime/runtime';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import App from './App';
 
-<<<<<<< HEAD
-=======
-jest.setTimeout(10000);
->>>>>>> 521d82e95fea8ceb7909e29f74ba0b703a6343dc
-
 global.fetch = jest.fn((input, init) => {
   const jsonToReturn = {};
   const url = input.replace(/\/$/, '');
@@ -17,19 +12,21 @@ global.fetch = jest.fn((input, init) => {
     const {num1, num2} = JSON.parse(init.body);
 
     switch (path) {
-      
       case 'exponent':
         jsonToReturn.result = num1 ** num2;
         break;
+
       case 'multiply':
         jsonToReturn.result = num1 * num2;
+        break;
 
       case 'addition':
         jsonToReturn.result = num1 + num2;
         break;
-	  case 'subtract':
-		jsonToReturn.result = num1 - num2;
-		break;
+
+      case 'subtract':
+        jsonToReturn.result = num1 - num2;
+        break;
 
       case 'divide':
         jsonToReturn.result = num1 / num2;
@@ -43,7 +40,6 @@ global.fetch = jest.fn((input, init) => {
 afterEach(cleanup);
 
 test('Test calculator', async () => {
-  
   const component = render(<App />);
   const buttons = component.getAllByRole('button');
   const equalsButton = buttons.find((button) => button.textContent === '=');
@@ -52,7 +48,7 @@ test('Test calculator', async () => {
     buttons.find((button) => button.textContent === `${num}`),
   );
   const resultDisplay = component.getByTestId('result-display');
- 
+
   /** Exponent Tests */
   const exponentButton = buttons.find((button) => button.textContent === '^');
 
@@ -72,14 +68,13 @@ test('Test calculator', async () => {
   fireEvent.click(numButtons[1]);
   fireEvent.click(numButtons[4]);
   fireEvent.click(equalsButton);
-  
 
   await new Promise((r) => setTimeout(r, 1500));
   expect(resultDisplay.textContent).not.toBe('100');
   fireEvent.click(resetButton);
 
-  
-  /** Exponent Tests */
+
+  /** Multiplication Tests */
   const multiplyButton = buttons.find((button) => button.textContent === '×');
 
   // Test 1: 5 * 6 = 30
@@ -103,8 +98,7 @@ test('Test calculator', async () => {
   expect(resultDisplay.textContent).not.toBe('225');
   fireEvent.click(resetButton);
 
-  }
-);
+
   /** Addition Tests */
   const additionButton = buttons.find((button) => button.textContent === '+');
 
@@ -128,10 +122,10 @@ test('Test calculator', async () => {
   await new Promise((r) => setTimeout(r, 1500));
   expect(resultDisplay.textContent).not.toBe('100');
   fireEvent.click(resetButton);
-  
+
   /** Subtract Tests */
   const subtractButton = buttons.find((button) => button.textContent === '-');
-  
+
   // Test 1: 3 - 2 = 1
   fireEvent.click(numButtons[3]);
   fireEvent.click(subtractButton);
@@ -141,18 +135,17 @@ test('Test calculator', async () => {
   await new Promise((r) => setTimeout(r, 1500));
   expect(resultDisplay.textContent).toBe('1');
   fireEvent.click(resetButton);
-  
+
   // Test 2: 8 - 5 != 100
   fireEvent.click(numButtons[8]);
   fireEvent.click(subtractButton);
   fireEvent.click(numButtons[5]);
   fireEvent.click(equalsButton);
-  
 
   await new Promise((r) => setTimeout(r, 1500));
   expect(resultDisplay.textContent).not.toBe('100');
   fireEvent.click(resetButton);
-  
+
   // Test 3: 2 - 3 = -1
   fireEvent.click(numButtons[3]);
   fireEvent.click(subtractButton);
@@ -162,7 +155,6 @@ test('Test calculator', async () => {
   await new Promise((r) => setTimeout(r, 1500));
   expect(resultDisplay.textContent).toBe('-1');
   fireEvent.click(resetButton);
-
 
 
   /** Division Tests */

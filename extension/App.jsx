@@ -187,7 +187,7 @@ export default class App extends React.Component {
             variant="light"
             style={{...styles.button, ...styles.orangeButton}}
             className="col-3"
-			onClick={() => this.selectOperation('SUBTRACT')}
+            onClick={() => this.selectOperation('SUBTRACT')}
           >
             −
           </Button>

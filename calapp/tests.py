@@ -1,6 +1,6 @@
 import json
-from urllib import response
 from django.test import TestCase
+
 
 class CalappTests(TestCase):
     @classmethod
@@ -82,7 +82,6 @@ class CalappTests(TestCase):
         self.assertNotEqual(response.status_code, 404)
         self.assertJSONNotEqual(response.content, {"result": 100})
 
-
     def test_correct_subtract_with_positive_result(self):
         response = self.client.post(
             "/subtract/",
@@ -94,7 +93,7 @@ class CalappTests(TestCase):
         data = json.loads(response.content)
         self.assertIn("result", data)
         self.assertEqual(data["result"], 1)
-    
+
     def test_incorrect_subtract(self):
         response = self.client.post(
             "/subtract/",
@@ -103,7 +102,7 @@ class CalappTests(TestCase):
         )
         self.assertNotEqual(response.status_code, 404)
         self.assertJSONNotEqual(response.content, {"result": 100})
-    
+
     def test_subtract_with_negative_result(self):
         response = self.client.post(
             "/subtract/",
@@ -115,8 +114,6 @@ class CalappTests(TestCase):
         data = json.loads(response.content)
         self.assertIn("result", data)
         self.assertEqual(data["result"], -1)
-
-
 
     def test_correct_division(self):
         response = self.client.post(
