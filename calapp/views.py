@@ -28,3 +28,6 @@ def addition(request):
     """
     data = json.loads(request.body.decode("utf-8"))
     return JsonResponse({"result": data["num1"] + data["num2"]})
+def subtract(request):
+    data = json.loads(request.body.decode("utf-8"))
+    return JsonResponse({"result": data["num1"] - data["num2"]})

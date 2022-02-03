@@ -26,6 +26,9 @@ global.fetch = jest.fn((input, init) => {
       case 'addition':
         jsonToReturn.result = num1 + num2;
         break;
+	  case 'subtract':
+		jsonToReturn.result = num1 - num2;
+		break;
     }
   }
 
@@ -64,6 +67,7 @@ test('Test calculator', async () => {
   fireEvent.click(numButtons[1]);
   fireEvent.click(numButtons[4]);
   fireEvent.click(equalsButton);
+  
 
   await new Promise((r) => setTimeout(r, 1500));
   expect(resultDisplay.textContent).not.toBe('100');
@@ -118,5 +122,39 @@ test('Test calculator', async () => {
 
   await new Promise((r) => setTimeout(r, 1500));
   expect(resultDisplay.textContent).not.toBe('100');
+  fireEvent.click(resetButton);
+  
+  /** Subtract Tests */
+  const subtractButton = buttons.find((button) => button.textContent === '-');
+  
+  // Test 1: 3 - 2 = 1
+  fireEvent.click(numButtons[3]);
+  fireEvent.click(subtractButton);
+  fireEvent.click(numButtons[2]);
+  fireEvent.click(equalsButton);
+
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(resultDisplay.textContent).toBe('1');
+  fireEvent.click(resetButton);
+  
+  // Test 2: 8 - 5 != 100
+  fireEvent.click(numButtons[8]);
+  fireEvent.click(subtractButton);
+  fireEvent.click(numButtons[5]);
+  fireEvent.click(equalsButton);
+  
+
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(resultDisplay.textContent).not.toBe('100');
+  fireEvent.click(resetButton);
+  
+  // Test 3: 2 - 3 = -1
+  fireEvent.click(numButtons[3]);
+  fireEvent.click(subtractButton);
+  fireEvent.click(numButtons[2]);
+  fireEvent.click(equalsButton);
+
+  await new Promise((r) => setTimeout(r, 1500));
+  expect(resultDisplay.textContent).toBe('-1');
   fireEvent.click(resetButton);
 });

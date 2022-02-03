@@ -9,6 +9,7 @@ const OPERATION_PATHS = {
   EXPONENTIAL: 'exponent',
   MULTIPLY: 'multiply',
   ADDITION: 'addition',
+  SUBTRACT: 'subtract',
 };
 
 export default class App extends React.Component {
@@ -185,7 +186,7 @@ export default class App extends React.Component {
             variant="light"
             style={{...styles.button, ...styles.orangeButton}}
             className="col-3"
-            onClick={() => {}}
+			onClick={() => this.selectOperation('SUBTRACT')}
           >
             −
           </Button>

@@ -7,4 +7,5 @@ urlpatterns = [
     path("exponent/", views.exponent, name="exponent"),
     path("multiply/", views.multiply, name="multiply"),
     path("addition/", views.addition, name="addition"),
+    path("subtract/", views.subtract, name="subtract"),
 ]
